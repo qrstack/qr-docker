@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+  mysql:
+    restart: always
+    image: "mysql:5.7.28"
+    container_name: "${MYSQL_NAME}"
+    ports:
+      - "${MYSQL_PORT}:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+    volumes:
+      - ./mysql:/etc/mysql/conf.d
+      - ./mysqldump/:/docker-entrypoint-initdb.d/
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
